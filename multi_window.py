@@ -1,7 +1,8 @@
 #https://www.youtube.com/watch?v=OtqWefBqbxA 참고하여 코드 작성
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel
+import check_an
 
 class Exam1(QWidget):
     global v
@@ -25,6 +26,10 @@ class Exam2(QWidget):
         self.setGeometry(300, 300, 400, 500) #창을 왼쪽에서 300, 위쪽에서 300에 띄우고 창크기 400X500으로 설정
         self.setWindowTitle("2") #창 제목 설정하는 함수
     def showed(self):
+        show_list = check_an.gosasapar()
+        for i in range(0, len(show_list)):
+            lb = QLabel(show_list[i], self)
+            lb.move(50, 50 + i * 20)
         self.show()
 
 
