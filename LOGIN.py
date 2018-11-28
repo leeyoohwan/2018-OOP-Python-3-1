@@ -27,12 +27,14 @@ class login(QWidget):
     def send(self): #버튼 눌리면
         self.user_id = str(self.id.text()) #정보 전송후
         self.user_pw = str(self.pw.text())
+        w.ex1_showed()
         self.close() #창을 닫는다
 
     def keyPressEvent(self, e): #오버라이딩, e에는 눌린 키의 정보가 담김
         if e.key() == Qt.Key_Return: #Qt.Key_Return는 enter 키를 뜻하는 상수 그래서 enter 눌린다면
             self.user_id = str(self.id.text()) #정보 전송후
             self.user_pw = str(self.pw.text())
+            w.ex1_showed()
             self.close() #창을 닫는다
 
 
