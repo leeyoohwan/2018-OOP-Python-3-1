@@ -64,8 +64,20 @@ while i:
     elif target_num ==3:
         print("오늘 저녁 식단 조회하겠습니다")
     else:
-        print('1~4 숫자 입력')
+        print('1~3 숫자 입력')
         continue
 
+    use_menu_data = soup.select('div.col-md-5 td')
+
+    a = []
+
+    for i in a:
+        name = i.getText().strip()
+        a.append(name)
+
+        print(a[0]+'aaa')
+        print(a[1]+'bbb')
+
+        a.clear()
 
 
