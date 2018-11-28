@@ -8,16 +8,16 @@ import datetime  # 날짜 관련 라이브러리
 import requests  # 웹 접속 관련 라이브러리
 from bs4 import BeautifulSoup as bs  # parsing library
 
-def gosasapar():
+
+def gosasapar(ID, PW):
     parlist=[] #파싱 결과 저장 리스트
     # 로그인이 필요한 사이트 파싱을 위한 정보 저장
     LOGIN_INFO = {
-        'id': '',
-        'passwd': ''
+        'id': ID,
+        'passwd': PW
     }
-
     now = datetime.date.today()
-    tmp_date = now + datetime.timedelta(days=-2)  # 2일 전 날짜를 구하기
+    tmp_date = now + datetime.timedelta(days=0)  # 2일 전 날짜를 구하기
 
     min_date = "%s-%02d-%02d" % (str(tmp_date.year)[2:4], tmp_date.month, tmp_date.day)  # 2일전 기준으로 18-01-01 과 같은 형태 만들기
 
@@ -57,9 +57,7 @@ def gosasapar():
             if 'board' == i.get('href').split('/')[1]:
                 auth_board_list.append(i.get('href').split('/')[3])
 
-        """
-        검색한 board_id 기반으로 각 게시판을 개별적으로 방문하여, 최근 2일간의 게시물들을 모두 가져오는 과정
-        """
+        #검색한 board_id 기반으로 각 게시판을 개별적으로 방문하여, 최근 2일간의 게시물들을 모두 가져오는 과정
         for board_id in auth_board_list:
             # 각 게시판에 접속하여 html tag 를 parsing 하기 좋게 bs4 를 적용한다.
             notice_board_data = bs(s.get('https://go.sasa.hs.kr/board/lists/' + board_id + '/page/1').text, 'html.parser')
@@ -86,4 +84,5 @@ def gosasapar():
                 if notice_date >= min_date:
                     add = notice_board_title +"|"+ notice_date +"|"+ notice_title +"|"+ notice_url
                     parlist.append(add)
+
     return parlist
