@@ -9,7 +9,7 @@
 
 import requests
 import sys
-import bs4
+from bs4 import BeautifulSoup as bs
 
 # 달빛학사 아이디와 비밀번호를 입력하고 사용--> GUI 구현 시 따로 저장 가능하게 할 것 / 또는 실시간 입력하기
 LOGIN_INFO = {
@@ -33,7 +33,7 @@ def get_html(url):
 with requests.Session() as s :
     first_page = s.get('https://go.sasa.hs.kr')
     html = first_page.text
-    soup = bs4.BeautifulSoup(html,'html.parser')
+    soup = bs(html,'html.parser')
 
 
 # 달빛학사 계정 로그인
@@ -67,16 +67,22 @@ while i:
         print('1~3 숫자 입력')
         continue
 
-    use_menu_data = soup.select('div.col-md-5 td')
+    use_data = bs(s.get("https://go.sasa.hs.kr").text, 'html.parser')
+    use_menu_data = use_data.select('div.col-md-5 td')
+    print(use_menu_data)
 
     a = []
+    print('ok')
 
-    for i in a:
+    for i in use_menu_data:
+        print('계획대로')
         name = i.getText().strip()
         a.append(name)
 
+        print("되고있어")
         print(a[0]+'aaa')
         print(a[1]+'bbb')
+        print(a[2])
 
         a.clear()
 
