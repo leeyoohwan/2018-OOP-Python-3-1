@@ -1,11 +1,10 @@
-#https://www.youtube.com/watch?v=OtqWefBqbxA 참고하여 코드 작성
+#https://www.youtube.com/channel/UCFinQvpLueFGR431gRsltOQ 참고하여 코드 작성
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit, QVBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap
 import check_an
 from PyQt5.QtCore import Qt
-import LOGIN
 
 class Exam1(QWidget):
     global v
@@ -38,21 +37,25 @@ class Exam2(QWidget):
         super().__init__() #부모 클래스의 init 함수 실행
         self.initUI() #여러가지를 생성하고 설정하는 함수
     def initUI(self):
-        self.setGeometry(300, 300, 400, 500) #창을 왼쪽에서 300, 위쪽에서 300에 띄우고 창크기 400X500으로 설정
         self.setWindowTitle("check_an") #창 제목 설정하는 함수
     def ex2_showed(self):
         show_list = check_an.gosasapar(z.user_id, z.user_pw)
-
         if not show_list: #새로 올라온 공지 없을 경우
             lb = QLabel("There is no new announcement") #새로 올라온 공지 없다고 출력
             lb.move(50, 50)
             self.show()
 
         else:
+            hbox = QVBoxLayout(self)
             for i in range(0, len(show_list)):
                 lb = QLabel(show_list[i], self)
-                lb.move(50, 50 + i * 20)
+                hbox.addWidget(lb)
+            self.setLayout(hbox)
             self.show()
+
+    def keyPressEvent(self, e): #오버라이딩, e에는 눌린 키의 정보가 담김
+        if e.key() == Qt.Key_Escape: #Qt.Key_Escape는 esc 키를 뜻하는 상수 그래서 esc 눌린다면
+            self.close() #창을 닫는다
 
 
 class login(QWidget):
@@ -92,6 +95,6 @@ class login(QWidget):
 app = QApplication(sys.argv) #필수적으로 쓰는 부분 그런가보다 하고 넘어가면 될 듯?
 v = Exam2() #객체 생성
 w = Exam1() #객체 생성
-z = login()
+z = login() #객체 생성
 
 sys.exit(app.exec_()) #app.exec_()에서 메인 loop 계속 돌다가 창을 끄거나 하면 sys.exit로 프로그램 종료
