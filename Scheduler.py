@@ -8,7 +8,7 @@ class sch : # 스케쥴 클래스. 그냥 구조체 개념입니다.
         self.month = m
         self.day = d
         self.contents = c
-        self.value = y*10000 + m*100 + d # 시간 계산에 사용하기 위한 꼼수 값입니다.
+        self.v = y*10000 + m*100 + d # 시간 계산에 사용하기 위한 꼼수 값입니다.
 calender = [] # 스케쥴 클래스를 담는 리스트입니다. 항상 시간순으로 정렬됩니다.
 
 # calender = file open txt
@@ -16,8 +16,8 @@ calender = [] # 스케쥴 클래스를 담는 리스트입니다. 항상 시간�
 message = "노력하는 자만이 기회를 잡을 수 있다"
 
 
-# def sorter(): # 캘린더 리스트를 정렬합니다. value 값 기준.
-#     b = 3+1
+def sorter(): # 캘린더 리스트를 정렬합니다. value 값 기준.
+    b = 3+1
 
 
 def printer(): # 캘린더 리스트를 출력하는 함수입니다.
