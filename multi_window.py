@@ -1,9 +1,10 @@
 #https://www.youtube.com/watch?v=OtqWefBqbxA 참고하여 코드 작성
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit
 from PyQt5.QtGui import QIcon, QPixmap
 import check_an
+from PyQt5.QtCore import Qt
 import LOGIN
 
 class Exam1(QWidget):
@@ -21,13 +22,15 @@ class Exam1(QWidget):
         self.btn1.move(20, 30) #버튼 왼쪽에서 20, 위쪽에서 30 이동
         self.setGeometry(300, 300, 400, 500) #창을 왼쪽에서 300, 위쪽에서 300에 띄우고 창크기 400X500으로 설정
         self.setWindowTitle("Dalbits") #창 제목 설정하는 함수
-        self.btn1.clicked.connect(v.showed)
-        self.show()
+        self.btn1.clicked.connect(v.ex2_showed)
         #self.btn2=QPushButton('스케줄러', self)
         #self.btn2.resize(self.btn1.sizeHint())
         #self.btn2.move(20, 60)
         #self.btn2.clicked.connect()
+
+    def ex1_showed(self):
         self.show()
+
 
 
 class Exam2(QWidget):
@@ -37,7 +40,7 @@ class Exam2(QWidget):
     def initUI(self):
         self.setGeometry(300, 300, 400, 500) #창을 왼쪽에서 300, 위쪽에서 300에 띄우고 창크기 400X500으로 설정
         self.setWindowTitle("check_an") #창 제목 설정하는 함수
-    def showed(self):
+    def ex2_showed(self):
         show_list = check_an.gosasapar(z.user_id, z.user_pw)
 
         if not show_list: #새로 올라온 공지 없을 경우
@@ -51,9 +54,44 @@ class Exam2(QWidget):
                 lb.move(50, 50 + i * 20)
             self.show()
 
+
+class login(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.btn = QPushButton('Login', self)
+        self.btn.move(260, 300)
+        self.btn.clicked.connect(self.send)
+
+        self.id = QLineEdit(self)
+        self.id.resize(300, 32)
+        self.id.move(150, 200)
+        self.pw = QLineEdit(self)
+        self.pw.resize(300, 32)
+        self.pw.move(150, 250)
+
+        self.setFixedSize(600, 400)
+        self.setWindowTitle('Dalbits_Login')
+        self.show()
+
+    def send(self): #버튼 눌리면
+        self.user_id = str(self.id.text()) #정보 전송후
+        self.user_pw = str(self.pw.text())
+        w.ex1_showed()
+        self.close() #창을 닫는다
+
+    def keyPressEvent(self, e): #오버라이딩, e에는 눌린 키의 정보가 담김
+        if e.key() == Qt.Key_Return: #Qt.Key_Return는 enter 키를 뜻하는 상수 그래서 enter 눌린다면
+            self.user_id = str(self.id.text()) #정보 전송후
+            self.user_pw = str(self.pw.text())
+            w.ex1_showed()
+            self.close() #창을 닫는다
+
 app = QApplication(sys.argv) #필수적으로 쓰는 부분 그런가보다 하고 넘어가면 될 듯?
 v = Exam2() #객체 생성
 w = Exam1() #객체 생성
-z = LOGIN.login()
+z = login()
 
 sys.exit(app.exec_()) #app.exec_()에서 메인 loop 계속 돌다가 창을 끄거나 하면 sys.exit로 프로그램 종료
