@@ -72,17 +72,12 @@ while i:
     print(use_menu_data)
 
     a = []
-    print('ok')
 
     for i in use_menu_data:
-        print('계획대로')
         name = i.getText().strip()
         a.append(name)
 
-        print("되고있어")
-        print(a[0]+'aaa')
-        print(a[1]+'bbb')
-        print(a[2])
+        print(a[0])
 
         a.clear()
 
