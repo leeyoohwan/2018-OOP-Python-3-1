@@ -2,7 +2,7 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit, QVBoxLayout
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QIcon, QPixmap, QFont
 import check_an
 from PyQt5.QtCore import Qt
 
@@ -19,7 +19,6 @@ class Exam1(QWidget):
         self.btn1=QPushButton('공지 확인', self) #첫 매개변수는 버튼에 들어갈 문구, 두 번째 매개변수는 나 자신에게 버튼 추가한다.
         self.btn1.resize(self.btn1.sizeHint()) #resize는 버튼 사이즈 조절함수 sizeHint는 버튼 문구에 적당한 크기 반환해주느 함수
         self.btn1.move(20, 30) #버튼 왼쪽에서 20, 위쪽에서 30 이동
-        self.setGeometry(300, 300, 400, 500) #창을 왼쪽에서 300, 위쪽에서 300에 띄우고 창크기 400X500으로 설정
         self.setWindowTitle("Dalbits") #창 제목 설정하는 함수
         self.btn1.clicked.connect(v.ex2_showed)
         #self.btn2=QPushButton('스케줄러', self)
@@ -64,16 +63,25 @@ class login(QWidget):
         self.initUI()
 
     def initUI(self):
+        log_lb = QLabel(self)
+        pixmap = QPixmap('login.png')
+        log_lb.setPixmap(pixmap)
+
         self.btn = QPushButton('Login', self)
-        self.btn.move(260, 300)
+        self.btn.move(260, 340)
         self.btn.clicked.connect(self.send)
 
         self.id = QLineEdit(self)
         self.id.resize(300, 32)
-        self.id.move(150, 200)
+        self.id.move(170, 200)
+        self.id.setStyleSheet("""QLineEdit { background-color: black; color: white }""")
+        font = QFont("Times", 17, QFont.Bold)
+        self.id.setFont(font)
         self.pw = QLineEdit(self)
         self.pw.resize(300, 32)
-        self.pw.move(150, 250)
+        self.pw.move(170, 265)
+        self.pw.setStyleSheet("""QLineEdit { background-color: black; color: white }""")
+        self.pw.setFont(font)
 
         self.setFixedSize(600, 400)
         self.setWindowTitle('Dalbits_Login')
