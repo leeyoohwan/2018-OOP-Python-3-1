@@ -37,6 +37,17 @@ def gosasapar(ID, PW):
 
         # 만들어진 로그인 데이터를 이용해서, 로그인을 시도한다.
         login_req = s.post('https://go.sasa.hs.kr/auth/login/', data=LOGIN_INFO)
+        # print(login_req.text)
+
+        # login_soup = bs(login_req.text, 'html.parser')
+
+        # check_login = login_soup.select('script')[0].get('alert')
+
+        # print(check_login)
+
+        # if check_login=="'ID나 PASSWORD를 확인해주세요.'":
+        #     return 0, None
+
 
         # 로그인이 성공적으로 이루어졌는지 확인한다.
         if login_req.status_code != 200:
@@ -85,4 +96,15 @@ def gosasapar(ID, PW):
                     add = notice_board_title +"|"+ notice_date +"|"+ notice_title +"|"+ notice_url
                     parlist.append(add)
 
-    return parlist
+    return 1, parlist
+
+# def sub_get_insert_time_and_press(url): #html에서 판매랭킹 1위부터 10위까지 상품 브랜드, 상품 이름, 상품 가격 가져오는 함수
+#     sub_html = get_html(url)
+#     sub_soup = bs4.BeautifulSoup(sub_html, 'html.parser')
+#
+#     for i in range(0, 1):
+#         item_name = sub_soup.select('div.article_info > p.list_info')[i].get('title') #상품 이름 가져오기
+#
+#     return item_name
+
+# gosasapar('111', '111')

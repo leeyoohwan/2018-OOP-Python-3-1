@@ -14,7 +14,7 @@ class Exam(QWidget):
         #icon=QPixmap("image.jpg")
         self.btn.setIcon(QIcon("image.png")) #버튼에 들어갈 이미지 지정
         self.btn.move(20, 30) #버튼 왼쪽에서 20, 위쪽에서 30 이동
-        self.btn.setIconSize(QSize(200, 200)) #버튼에 들어가는 이미지의 크기 지정
+        self.btn.setIconSize(QSize(100, 100)) #버튼에 들어가는 이미지의 크기 지정
         self.setGeometry(300, 300, 400, 500) #창을 왼쪽에서 300, 위쪽에서 300에 띄우고 창크기 400X500으로 설정
         self.setWindowTitle("첫 번째 학습시간") #창 제목 설정하는 함수
         self.show()  # 창 띄우기
