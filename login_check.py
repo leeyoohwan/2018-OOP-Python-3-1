@@ -4,7 +4,7 @@ import requests  # 웹 접속 관련 라이브러리
 from bs4 import BeautifulSoup as bs  # parsing library
 
 
-def gosasapar(ID, PW):
+def log_ck(ID, PW):
     parlist=[] #파싱 결과 저장 리스트
     # 로그인이 필요한 사이트 파싱을 위한 정보 저장
     LOGIN_INFO = {
@@ -49,4 +49,4 @@ def gosasapar(ID, PW):
 #     return item_name
 
 if __name__ == '__main__':
-    gosasapar('111', '111')
+    log_ck('111', '111')
