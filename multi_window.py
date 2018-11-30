@@ -38,10 +38,7 @@ class Exam2(QWidget):
     def initUI(self):
         self.setWindowTitle("check_an") #창 제목 설정하는 함수
     def ex2_showed(self):
-        flag, show_list = check_an.gosasapar(z.user_id, z.user_pw)
-        if flag==0:
-            ans = QMessageBox.question(self, "Login_error", "id, pw를 다시 입력해주세요.")
-            sys.exit(0)
+        show_list = check_an.gosasapar(z.user_id, z.user_pw)
 
         if not show_list: #새로 올라온 공지 없을 경우
             lb = QLabel("There is no new announcement") #새로 올라온 공지 없다고 출력
