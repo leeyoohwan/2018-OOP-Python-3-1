@@ -130,19 +130,19 @@ def get_html(url):
 
 
 def starting():
-    target_num = int(input('1아침,2점심,3저녁 중 번호를 선택하세요.'))
-    if target_num == 1:
+    target_num = input('1아침,2점심,3저녁 중 번호를 선택하세요.')
+    if target_num == '1':
         print("오늘 아침 식단 조회하겠습니다")
-    elif target_num == 2:
+    elif target_num == '2':
         print("오늘 점심 식단 조회하겠습니다")
-    elif target_num == 3:
+    elif target_num == '3':
         print("오늘 저녁 식단 조회하겠습니다")
     elif target_num == 'exit':
         return 4
     else:
         print('1~3 숫자 입력')
         return 5
-    return target_num
+    return int(target_num)
 
 
 with requests.Session() as s:
