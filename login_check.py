@@ -25,28 +25,13 @@ def log_ck(ID, PW):
 
         # 만들어진 로그인 데이터를 이용해서, 로그인을 시도한다.
         login_req = s.post('https://go.sasa.hs.kr/auth/login/', data=LOGIN_INFO)
-        print(login_req.text)
 
-        login_soup = bs(login_req.text, 'html.parser')
+        if 'ID나 PASSWORD를 확인해주세요.' in str(login_req.text) or 'Unable to load the requested file' in str(login_req.text):
+            print(0)
+            return 0
+        else:
+            print(1)
+            return 1
 
-        check_login = login_soup.select('script')[0].get('alert')
-
-        print(check_login)
-
-        if check_login=="'ID나 PASSWORD를 확인해주세요.'":
-            return False
-
-
-    return True
-
-# def sub_get_insert_time_and_press(url): #html에서 판매랭킹 1위부터 10위까지 상품 브랜드, 상품 이름, 상품 가격 가져오는 함수
-#     sub_html = get_html(url)
-#     sub_soup = bs4.BeautifulSoup(sub_html, 'html.parser')
-#
-#     for i in range(0, 1):
-#         item_name = sub_soup.select('div.article_info > p.list_info')[i].get('title') #상품 이름 가져오기
-#
-#     return item_name
-
-if __name__ == '__main__':
-    log_ck('111', '111')
+if __name__=='__main__':
+    log_ck('1717', '')
