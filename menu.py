@@ -29,6 +29,21 @@ def get_html(url):
 
     return response.text
 
+def starting():
+    target_num = int(input('1아침,2점심,3저녁 중 번호를 선택하세요.'))
+    if target_num == 1:
+        print("오늘 아침 식단 조회하겠습니다")
+    elif target_num == 2:
+        print("오늘 점심 식단 조회하겠습니다")
+    elif target_num == 3:
+        print("오늘 저녁 식단 조회하겠습니다")
+    elif target_num == 'exit':
+        return 0
+    else:
+        print('1~3 숫자 입력')
+        return -1
+    return target_num
+
 
 with requests.Session() as s :
     first_page = s.get('https://go.sasa.hs.kr')
@@ -56,29 +71,36 @@ print("========================================================")
 
 i = True
 while i:
-    target_num = int(input('1아침,2점심,3저녁 중 번호를 선택하세요.'))
-    if target_num == 1:
-        print("오늘 아침 식단 조회하겠습니다")
-    elif target_num ==2:
-        print("오늘 점심 식단 조회하겠습니다")
-    elif target_num ==3:
-        print("오늘 저녁 식단 조회하겠습니다")
-    else:
-        print('1~3 숫자 입력')
+    chk = starting()
+    if chk==0:
+        i=False
+    elif chk==-1:
         continue
 
     use_data = bs(s.get("https://go.sasa.hs.kr").text, 'html.parser')
     use_menu_data = use_data.select('div.col-md-5 td')
+
     print(use_menu_data)
 
     a = []
+    k=use_menu_data[chk-1]
+    print(k)
 
-    for i in use_menu_data:
-        name = i.getText().strip()
-        a.append(name)
+    str(k)
+    print(k)
+    k.split()
+    print(k)
 
-        print(a[0])
+    # name = k.getText().split('<br/>')
+    # name = k.getText().strip()
+    # name = k.getText()
+    # name = k.getText
 
-        a.clear()
+    print("yesss")
+    a.append(k)
+
+    print(a)
+
+    a.clear()
 
 
