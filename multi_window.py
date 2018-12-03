@@ -1,11 +1,11 @@
 #https://www.youtube.com/channel/UCFinQvpLueFGR431gRsltOQ 참고하여 코드 작성
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 import check_an
 from login_check import *
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, QDate
 # from Scheduler import *
 
 calender=[]
@@ -148,17 +148,39 @@ class schedule_window(QWidget):
         sc_bt2=QPushButton('일정추가', self)
         sc_bt2.resize(sc_bt2.sizeHint())
         sc_bt2.move(30, 130)
-        # sc_bt2.clicked.connect()
+        sc_bt2.clicked.connect(a.showed)
     def showed(self):
         self.show()
 
-class addschedule_window(QWidget):
+class schedule_add(QWidget):
     def __init__(self):
+        vbox = QVBoxLayout()
         super().__init__()
-        self.initUI()
-    def initUI(self):
-        self.setFixedSize(500, 500)
+        self.cal = QCalendarWidget(self)
+        self.cal.setFixedSize(self.cal.sizeHint())
+        self.cal.selectionChanged.connect(self.dayset)
+        self.content_send=QPushButton("일정추가", self)
+        self.content=QLineEdit(self)
+        vbox.addWidget(self.cal)
+        vbox.addWidget(self.content)
+        vbox.addWidget(self.content_send)
+        self.setLayout(vbox)
+        self.set_day = str(QDate.currentDate().toPyDate()).split('-')
+        self.content_send.clicked.connect(self.add_sch)
 
+    def dayset(self):
+        ddate = str(self.cal.selectedDate().toPyDate())
+        self.set_day = ddate.split('-')
+
+    def add_sch(self):
+        global day
+        global schh
+        sch_day=self.set_day[0]+self.set_day[1]+self.set_day[2]
+        day.append(sch_day)
+        schh.append(str(self.content.text()))
+
+    def showed(self):
+        self.show()
 
 
 class schedule_check(QWidget):
@@ -213,6 +235,7 @@ def printer():  # 캘린더 리스트를 출력하는 함수입니다.
 
 app = QApplication(sys.argv) #필수적으로 쓰는 부분 그런가보다 하고 넘어가면 될 듯?
 v = Exam2() #객체 생성
+a = schedule_add()
 f = schedule_check()
 g = schedule_window()
 w = MainWindow() #객체 생성
