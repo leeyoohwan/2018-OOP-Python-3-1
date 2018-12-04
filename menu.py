@@ -219,6 +219,7 @@ with requests.Session() as s:
 
 
 def get_Menu(target_num):
+    # 가져온 문자열을 자르는 부분_ 강동욱 선생님께 도움을 요청하여 작성하고, 이후 함수로 만듦
     selectMenu = use_menu_data[target_num-1]  # 예를 들어 0 아침이 선택되어 있다고 가정하자.
     selectMenu = str(selectMenu)  # 문자열로 변경한다.
     selectMenu = selectMenu.replace('<br/>', '|')  # <br/> 태그를 | 로 변경하여 구분자를 선언
@@ -230,6 +231,7 @@ def get_Menu(target_num):
         selectMenu[i] = selectMenu[i].strip()  # 공백이 있을 경우가 있기 때문에 제거
 
     selectMenu.remove('')  # 마지막에 빈 값이 있기때문에 제거
+
     return selectMenu
 
 
@@ -248,6 +250,7 @@ use_menu_data = use_data.select('div#menu div.box-body table tbody tr td.menu')
 # use_menu_data 에는 0 아침, 1 점심, 2 저녁이 들어가 있다.
 
 
+# 아래는 함수 작동 확인 및 출력용 코드임
 breakfast = get_Menu(1)
 lunch = get_Menu(2)
 dinner = get_Menu(3)
