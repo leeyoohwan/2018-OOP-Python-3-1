@@ -17,12 +17,6 @@ def get_html(url):
     return response.text
 
 
-with requests.Session() as s:
-    first_page = s.get('https://go.sasa.hs.kr')
-    html = first_page.text
-    soup = bs(html, 'html.parser')
-
-
 def get_Menu(target_num, menu_data):
     # 가져온 문자열을 자르는 부분_ 강동욱 선생님께 도움을 요청하여 작성하고, 이후 함수로 만듦
     selectMenu = menu_data[target_num-1]  # 예를 들어 0 아침이 선택되어 있다고 가정하자.
@@ -45,6 +39,12 @@ def check_menu(ID, PW):
         'id': ID,
         'passwd': PW
     }
+
+    with requests.Session() as s:
+        first_page = s.get('https://go.sasa.hs.kr')
+        html = first_page.text
+        soup = bs(html, 'html.parser')
+
     # 달빛학사 계정 로그인
     csrf = soup.find('input', {'name': 'csrf_test_name'})
     LOGIN_INFO.update({'csrf_test_name': csrf['value']})
@@ -65,6 +65,4 @@ def check_menu(ID, PW):
     lunch = get_Menu(2, use_menu_data)
     dinner = get_Menu(3, use_menu_data)
 
-    print(breakfast)
-    print(lunch)
-    print(dinner)
+    return breakfast, lunch, dinner
