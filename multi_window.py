@@ -151,6 +151,10 @@ class schedule_window(QWidget):
         sc_bt2.resize(sc_bt2.sizeHint())
         sc_bt2.move(30, 130)
         sc_bt2.clicked.connect(a.showed)
+        sc_bt3=QPushButton('일정삭제', self)
+        sc_bt3.resize(sc_bt3.sizeHint())
+        sc_bt3.move(30, 230)
+        sc_bt3.clicked.connect(b.initUI)
     def showed(self):
         self.show()
 
@@ -190,6 +194,42 @@ class schedule_add(QWidget):
     def closeEvent(self, QCloseEvent):
         reset()
 
+class schedule_del(QWidget):
+    def __init__(self):
+        super().__init__()
+
+    def initUI(self):
+        super().__init__()
+        global day
+        global schh
+        self.setGeometry(800, 200, 300, 300)
+        self.checkbox = []
+        vbox=QVBoxLayout()
+        for i in range(0, len(day)):
+            self.checkbox.append(QCheckBox(str(day[i]) + "-" + schh[i], self))
+            self.checkbox[i].resize(150, 30)
+            vbox.addWidget(self.checkbox[i])
+
+        self.dele = QPushButton('선택된 항목 삭제', self)
+        self.dele.resize(self.dele.sizeHint())
+        self.dele.clicked.connect(self.checkdelete)
+        vbox.addWidget(self.dele)
+        self.setLayout(vbox)
+        self.show()
+
+    def checkdelete(self):
+        delday=[]
+        delschh=[]
+        for i in range(0, len(day)):
+            if self.checkbox[i].isChecked() == True:
+                delday.append(day[i])
+                delschh.append(schh[i])
+
+        for i in range(0, len(delday)):
+            day.remove(delday[i])
+            schh.remove(delschh[i])
+        self.close()
+
 
 class schedule_check(QWidget):
     def __init__(self):
@@ -197,12 +237,13 @@ class schedule_check(QWidget):
         fileopen()
 
     def show_sc(self):
-        self.setFixedSize(100, 300)
+        super().__init__()
+        self.setFixedSize(200, 300)
         for i in range(0, len(day)):
             daylabel=QLabel(str(day[i]), self)
             schhlabel=QLabel(schh[i], self)
-            daylabel.move(10, i*30)
-            schhlabel.move(10, i*30+20)
+            daylabel.move(10, i*40)
+            schhlabel.move(10, i*40+15)
         self.show()
 
 def fileopen():  # 파일 오픈하여 캘린더에 담기. 처음 한번만 시행.
@@ -247,7 +288,7 @@ def reset(): # 파일을 리셋합니다. 프로그램을 종료할 때 시행�
     f.close()
     f = open('schedule.txt', 'a')
     for i in range(0, len(day)):
-        f.write(str(day[i]) + "/" + schh[i])
+        f.write(str(day[i]) + "/" + schh[i] +"\n")
     f.close()
 
 
@@ -255,10 +296,10 @@ app = QApplication(sys.argv) #필수적으로 쓰는 부분 그런가보다 하�
 v = Exam2() #객체 생성
 a = schedule_add()
 f = schedule_check()
+b = schedule_del()
 g = schedule_window()
 w = MainWindow() #객체 생성
 h = log_window()
 z = login() #객체 생성
 
 sys.exit(app.exec_()) #app.exec_()에서 메인 loop 계속 돌다가 창을 끄거나 하면 sys.exit로 프로그램 종료
-
