@@ -1,14 +1,16 @@
 #https://www.youtube.com/channel/UCFinQvpLueFGR431gRsltOQ 참고하여 코드 작성
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 import check_an
 from login_check import *
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, QDate
 # from Scheduler import *
 
 calender=[]
+day = []
+schh = []
 
 class MainWindow(QWidget):
     global v
@@ -148,27 +150,54 @@ class schedule_window(QWidget):
         sc_bt2=QPushButton('일정추가', self)
         sc_bt2.resize(sc_bt2.sizeHint())
         sc_bt2.move(30, 130)
-        # sc_bt2.clicked.connect()
+        sc_bt2.clicked.connect(a.showed)
     def showed(self):
         self.show()
 
-class addschedule_window(QWidget):
+class schedule_add(QWidget):
     def __init__(self):
+        vbox = QVBoxLayout()
         super().__init__()
-        self.initUI()
-    def initUI(self):
-        self.setFixedSize(500, 500)
+        self.cal = QCalendarWidget(self)
+        self.cal.setFixedSize(self.cal.sizeHint())
+        self.cal.selectionChanged.connect(self.dayset)
+        self.content_send=QPushButton("일정추가", self)
+        self.content=QLineEdit(self)
+        vbox.addWidget(self.cal)
+        vbox.addWidget(self.content)
+        vbox.addWidget(self.content_send)
+        self.setLayout(vbox)
+        self.set_day = str(QDate.currentDate().toPyDate()).split('-')
+        self.content_send.clicked.connect(self.add_sch)
 
+    def dayset(self):
+        ddate = str(self.cal.selectedDate().toPyDate())
+        self.set_day = ddate.split('-')
+
+    def add_sch(self):
+        global day
+        global schh
+        sch_day=int(self.set_day[0]+self.set_day[1]+self.set_day[2])
+        print(sch_day)
+        print(day)
+        day.append(sch_day)
+        schh.append(str(self.content.text()))
+        sorter()
+
+    def showed(self):
+        self.show()
+
+    def closeEvent(self, QCloseEvent):
+        reset()
 
 
 class schedule_check(QWidget):
     def __init__(self):
         super().__init__()
+        fileopen()
 
     def show_sc(self):
         self.setFixedSize(100, 300)
-        fileopen()
-        day, schh = printer()
         for i in range(0, len(day)):
             daylabel=QLabel(str(day[i]), self)
             schhlabel=QLabel(schh[i], self)
@@ -177,7 +206,6 @@ class schedule_check(QWidget):
         self.show()
 
 def fileopen():  # 파일 오픈하여 캘린더에 담기. 처음 한번만 시행.
-    global calender
     try:
         f = open("schedule.txt", 'r')
     except:
@@ -192,27 +220,40 @@ def fileopen():  # 파일 오픈하여 캘린더에 담기. 처음 한번만 시
         if not line: break
         spline = line.split('/')
         spline[1] = spline[1].rstrip('\n')
-        calender.append(int(spline[0]))
-        calender.append(spline[1])
+        day.append(int(spline[0]))
+        schh.append(spline[1])
     f.close()
 
-def printer():  # 캘린더 리스트를 출력하는 함수입니다.
-    global calender
-    day = []
-    schh = []
-    for i in range(0, len(calender)):
-        if i%2==0:
-            day.append(calender[i])
-        else:
-            schh.append(calender[i])
+def sorter(): # 캘린더 리스트를 정렬합니다. v 값 기준.
+    global day
+    global schh
+    for i in range(0, len(day)-1):
+        minj = i
+        for j in range(i, len(day)):
+            if day[j] < day[minj]:
+                tp = day[minj]
+                day[minj]=day[j]
+                day[j]=tp
+                tp=schh[minj]
+                schh[minj]=schh[j]
+                schh[j]=tp
+                minj = j
     print(day)
     print(schh)
-    return day, schh
 
+def reset(): # 파일을 리셋합니다. 프로그램을 종료할 때 시행합니다
+    f = open('schedule.txt', 'w')
+    f.write('')
+    f.close()
+    f = open('schedule.txt', 'a')
+    for i in range(0, len(day)):
+        f.write(str(day[i]) + "/" + schh[i])
+    f.close()
 
 
 app = QApplication(sys.argv) #필수적으로 쓰는 부분 그런가보다 하고 넘어가면 될 듯?
 v = Exam2() #객체 생성
+a = schedule_add()
 f = schedule_check()
 g = schedule_window()
 w = MainWindow() #객체 생성
