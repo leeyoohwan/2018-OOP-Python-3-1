@@ -7,7 +7,6 @@ import check_an
 from login_check import *
 from PyQt5.QtCore import Qt, QSize, QDate
 import menu
-# from Scheduler import *
 
 calender=[]
 day = []
@@ -20,7 +19,7 @@ class MainWindow(QWidget):
         self.initUI() #여러가지를 생성하고 설정하는 함수
     def initUI(self):
         label = QLabel(self) #배경 사진 지정
-        pixmap = QPixmap('background.png')
+        pixmap = QPixmap('back.png')
         label.setPixmap(pixmap)
         self.setFixedSize(900, 600)
         self.setWindowTitle("Dalbits")  # 창 제목 설정
