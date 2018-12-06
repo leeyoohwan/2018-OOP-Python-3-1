@@ -137,7 +137,7 @@ startCheck = input("Enter anything to start Studying")
 # 시작 시각을 튜플로 저장
 starting_time = time.localtime()
 # print(starting_time)
-today = str(starting_time[0]) + str(starting_time[1]) + str(starting_time[2])
+today = str(starting_time[0])+' '+str(starting_time[1])+' '+str(starting_time[2])
 
 # 사용자가 공부를 끝내고 눌러 시간 측정 끝냄
 endCheck = input("Enter anything to end Studying")
@@ -162,7 +162,10 @@ f.close()
 lines.reverse()  # 읽은 라인을 역순으로 정렬--> 최신 것에 접근하려고
 # 가장 최근에 저장된 날짜가 오늘과 같으면 newchk:False, 있는거에 누적시키고
 # 그렇지 않으면 newchk:True, 새로 날짜 파서 공부한 시간 저장할거임
-lastDay = lines[1]
+if not lines:
+    lastDay = 'EMPTY'
+else:
+    lastDay = lines[1]
 newchk = True
 if lastDay == today:
     newchk = False
