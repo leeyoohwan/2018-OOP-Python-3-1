@@ -48,7 +48,6 @@ class MainWindow(QWidget):
 class Exam2(QWidget):
     def __init__(self):
         super().__init__() #부모 클래스의 init 함수 실행
-        self.initUI() #여러가지를 생성하고 설정하는 함수
     def ex2_showed(self):
         super().__init__()  # 부모 클래스의 init 함수 실행
         self.setWindowTitle("check_an") #창 제목 설정하는 함수
