@@ -36,7 +36,7 @@ class MainWindow(QWidget):
         self.btn2.setIconSize(QSize(210, 70))
         self.btn2.resize(210, 70)
         self.btn2.move(550, 250)
-        self.btn2.clicked.connect(g.showed)
+        self.btn2.clicked.connect(g.show)
 
         self.btn3 = QPushButton('', self)
         self.btn3.setIcon(QIcon("bt2.png"))
@@ -44,10 +44,6 @@ class MainWindow(QWidget):
         self.btn3.resize(210, 70)
         self.btn3.move(550, 470)
         self.btn3.clicked.connect(m.menu_showed)
-
-    def ex1_showed(self):
-        self.show()
-
 
 class Exam2(QWidget):
     def __init__(self):
@@ -113,7 +109,7 @@ class login(QWidget):
         self.user_id = str(self.id.text()) #정보 전송후
         self.user_pw = str(self.pw.text())
         if log_ck(self.user_id, self.user_pw) == 1:
-             w.ex1_showed()
+             w.show()
              self.close() #창을 닫는다
         else:
              h.showed()
@@ -123,7 +119,7 @@ class login(QWidget):
             self.user_id = str(self.id.text()) #정보 전송후
             self.user_pw = str(self.pw.text())
             if log_ck(self.user_id, self.user_pw) == 1:
-                w.ex1_showed()
+                w.show()
                 self.close() #창을 닫는다
             else :
                 h.showed()
@@ -198,13 +194,11 @@ class schedule_window(QWidget):
         sc_bt2=QPushButton('일정추가', self)
         sc_bt2.resize(sc_bt2.sizeHint())
         sc_bt2.move(30, 130)
-        sc_bt2.clicked.connect(a.showed)
+        sc_bt2.clicked.connect(a.show)
         sc_bt3=QPushButton('일정삭제', self)
         sc_bt3.resize(sc_bt3.sizeHint())
         sc_bt3.move(30, 230)
         sc_bt3.clicked.connect(b.initUI)
-    def showed(self):
-        self.show()
 
 class schedule_add(QWidget):
     def __init__(self):
@@ -235,9 +229,6 @@ class schedule_add(QWidget):
         day.append(sch_day)
         schh.append(str(self.content.text()))
         sorter()
-
-    def showed(self):
-        self.show()
 
     def closeEvent(self, QCloseEvent):
         reset()
