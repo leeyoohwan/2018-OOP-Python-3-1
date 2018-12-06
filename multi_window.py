@@ -52,6 +52,7 @@ class Exam2(QWidget):
     def initUI(self):
         self.setWindowTitle("check_an") #창 제목 설정하는 함수
     def ex2_showed(self):
+        super().__init__()  # 부모 클래스의 init 함수 실행
         show_list = check_an.gosasapar(z.user_id, z.user_pw)
 
         if not show_list: #새로 올라온 공지 없을 경우
