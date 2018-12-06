@@ -6,6 +6,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QFont
 import check_an
 from login_check import *
 from PyQt5.QtCore import Qt, QSize, QDate
+import menu
 # from Scheduler import *
 
 calender=[]
@@ -38,6 +39,13 @@ class MainWindow(QWidget):
         self.btn2.move(550, 250)
         self.btn2.clicked.connect(g.showed)
 
+        self.btn3 = QPushButton('', self)
+        self.btn3.setIcon(QIcon("bt2.png"))
+        self.btn3.setIconSize(QSize(210, 70))
+        self.btn3.resize(210, 70)
+        self.btn3.move(550, 470)
+        self.btn3.clicked.connect(m.menu_showed)
+
     def ex1_showed(self):
         self.show()
 
@@ -57,11 +65,11 @@ class Exam2(QWidget):
             self.show()
 
         else:
-            hbox = QVBoxLayout(self)
+            self.hbox = QVBoxLayout(self)
             for i in range(0, len(show_list)):
                 lb = QLabel(show_list[i], self)
-                hbox.addWidget(lb)
-            self.setLayout(hbox)
+                self.hbox.addWidget(lb)
+            self.setLayout(self.hbox)
             self.show()
 
     def keyPressEvent(self, e): #오버라이딩, e에는 눌린 키의 정보가 담김
@@ -120,6 +128,47 @@ class login(QWidget):
                 self.close() #창을 닫는다
             else :
                 h.showed()
+
+class menu_window(QWidget):
+    def __init__(self):
+        super().__init__()
+    def menu_showed(self):
+        br_menu, lu_menu, di_menu = menu.check_menu(z.user_id, z.user_pw)
+        print(br_menu)
+        print(lu_menu)
+        print(di_menu)
+        brbox = QVBoxLayout()
+        lb = QLabel('아침')
+        brbox.addWidget(lb)
+
+        lubox = QVBoxLayout()
+        lb = QLabel('점심')
+        lubox.addWidget(lb)
+
+        dibox = QVBoxLayout()
+        lb = QLabel('저녁')
+        dibox.addWidget(lb)
+
+        for i in range(0, len(br_menu)):
+            lb = QLabel(br_menu[i])
+            brbox.addWidget(lb)
+        # print("크앙!")
+        for i in range(0, len(lu_menu)):
+            lb = QLabel(lu_menu[i])
+            lubox.addWidget(lb)
+        # print("크앙!")
+        for i in range(0, len(di_menu)):
+            lb = QLabel(di_menu[i])
+            dibox.addWidget(lb)
+
+        self.hbox = QHBoxLayout(self)
+        print("크앙!")
+        self.hbox.addLayout(brbox)
+        self.hbox.addLayout(lubox)
+        self.hbox.addLayout(dibox)
+
+        self.setLayout(self.hbox)
+        self.show()
 
 class log_window(QWidget):
     def __init__(self):
@@ -298,6 +347,7 @@ a = schedule_add()
 f = schedule_check()
 b = schedule_del()
 g = schedule_window()
+m = menu_window()
 w = MainWindow() #객체 생성
 h = log_window()
 z = login() #객체 생성
