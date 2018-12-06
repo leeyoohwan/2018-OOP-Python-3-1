@@ -267,6 +267,7 @@ class schedule_del(QWidget):
         for i in range(0, len(delday)):
             day.remove(delday[i])
             schh.remove(delschh[i])
+        reset()
         self.close()
 
 
