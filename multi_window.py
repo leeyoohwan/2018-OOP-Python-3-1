@@ -42,7 +42,7 @@ class MainWindow(QWidget):
         self.btn3.setIcon(QIcon("bt2.png"))
         self.btn3.setIconSize(QSize(210, 70))
         self.btn3.resize(210, 70)
-        self.btn3.move(550, 470)
+        self.btn3.move(550, 430)
         self.btn3.clicked.connect(m.menu_showed)
 
 class Exam2(QWidget):
@@ -80,10 +80,6 @@ class login(QWidget):
         log_lb = QLabel(self)
         pixmap = QPixmap('login.png')
         log_lb.setPixmap(pixmap)
-
-        self.btn = QPushButton('Login', self)
-        self.btn.move(260, 340)
-        self.btn.clicked.connect(self.send)
 
         self.id = QLineEdit(self) #id 입력하는 줄
         self.id.resize(300, 32)
@@ -126,6 +122,7 @@ class login(QWidget):
 class menu_window(QWidget):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle('check_menu')
     def menu_showed(self):
         br_menu, lu_menu, di_menu = menu.check_menu(z.user_id, z.user_pw)
         print(br_menu)
@@ -185,24 +182,35 @@ class schedule_window(QWidget):
         super().__init__()
         self.initUI()
     def initUI(self):
-        self.setFixedSize(500, 500)
-        sc_bt1=QPushButton('일정확인', self)
-        sc_bt1.resize(sc_bt1.sizeHint())
-        sc_bt1.move(30, 30)
+        label = QLabel(self)  # 배경 사진 지정
+        pixmap = QPixmap('scbk.png')
+        label.setPixmap(pixmap)
+        self.setWindowTitle('Scheduler')
+        self.setFixedSize(350, 400)
+        sc_bt1=QPushButton('', self)
+        sc_bt1.resize(210, 70)
+        sc_bt1.setIcon(QIcon("ck.png"))
+        sc_bt1.setIconSize(QSize(210, 70))
+        sc_bt1.move(70, 30)
         sc_bt1.clicked.connect(f.show_sc)
-        sc_bt2=QPushButton('일정추가', self)
-        sc_bt2.resize(sc_bt2.sizeHint())
-        sc_bt2.move(30, 130)
+        sc_bt2=QPushButton('', self)
+        sc_bt2.resize(210, 70)
+        sc_bt2.setIcon(QIcon("ad.png"))
+        sc_bt2.setIconSize(QSize(210, 70))
+        sc_bt2.move(70, 150)
         sc_bt2.clicked.connect(a.show)
-        sc_bt3=QPushButton('일정삭제', self)
-        sc_bt3.resize(sc_bt3.sizeHint())
-        sc_bt3.move(30, 230)
+        sc_bt3=QPushButton('', self)
+        sc_bt3.resize(210, 70)
+        sc_bt3.setIcon(QIcon("de.png"))
+        sc_bt3.setIconSize(QSize(210, 70))
+        sc_bt3.move(70, 270)
         sc_bt3.clicked.connect(b.initUI)
 
 class schedule_add(QWidget):
     def __init__(self):
         vbox = QVBoxLayout()
         super().__init__()
+        self.setWindowTitle('add_schedule')
         self.cal = QCalendarWidget(self)
         self.cal.setFixedSize(self.cal.sizeHint())
         self.cal.selectionChanged.connect(self.dayset)
@@ -240,6 +248,7 @@ class schedule_del(QWidget):
         super().__init__()
         global day
         global schh
+        self.setWindowTitle('delete_schedule')
         self.setGeometry(800, 200, 300, 300)
         self.checkbox = []
         vbox=QVBoxLayout()
@@ -277,7 +286,8 @@ class schedule_check(QWidget):
 
     def show_sc(self):
         super().__init__()
-        self.setFixedSize(200, 300)
+        self.setWindowTitle('check_schedule')
+        self.setFixedSize(300, 400)
         for i in range(0, len(day)):
             daylabel=QLabel(str(day[i]), self)
             schhlabel=QLabel(schh[i], self)
