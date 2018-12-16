@@ -33,3 +33,7 @@ GUI를 구현하기 위해 pyqt부터 시작하여 달빛학사의 여러가지 
 
 ## 9. 기타
 
+## 10. 프로그램 실행
+multi_window.py 를 run 하면 프로그램이 실행됩니다.
+
+프로그램을 실행 시키기 위해 pyqt, daytime, requests, BeautifulSoup, sys 의 라이브러리가 필요합니다.
