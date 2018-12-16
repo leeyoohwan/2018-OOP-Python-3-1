@@ -83,7 +83,7 @@ def gosasapar(ID, PW):
 
                 # 게시된지 2일 이하의 게시물을 필터링
                 if notice_date >= min_date:
-                    add = notice_board_title +"|"+ notice_date +"|"+ notice_title +"|"+ notice_url
+                    add = notice_board_title +"|"+ notice_title +"|"+ notice_url
                     parlist.append(add)
 
     return parlist
