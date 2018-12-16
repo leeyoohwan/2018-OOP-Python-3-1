@@ -285,16 +285,18 @@ class schedule_del(QWidget):
         global schh
         self.setWindowTitle('delete_schedule')
         self.setGeometry(800, 200, 300, 300)
+        self.checkbox = []
         vbox=QVBoxLayout()
         debox=QHBoxLayout()
         for i in range(0, len(day)):
             self.de_sc=QCheckBox(str(day[i]) + "-" + schh[i])
             self.de_sc.setStyleSheet("color: white")
-            self.de_sc.resize(150, 30)
+            self.de_sc.resize(180, 36)
+            self.checkbox.append(self.de_sc)
             vbox.addWidget(self.de_sc)
 
-        self.dele = QPushButton('')
-        self.dele.resize(231, 70)
+        self.dele = QPushButton('', self)
+        self.dele.resize(210, 52)
         self.dele.setIcon(QIcon("del.png"))
         self.dele.setIconSize(QSize(210, 52))
         self.dele.clicked.connect(self.checkdelete)
