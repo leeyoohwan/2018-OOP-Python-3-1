@@ -247,7 +247,6 @@ class schedule_add(QWidget):
         self.cal = QCalendarWidget(self)
         self.cal.setFixedSize(self.cal.sizeHint())
         self.cal.selectionChanged.connect(self.dayset)
-        self.cal.setStyleSheet("background-color:blue;")
         self.content_send=QPushButton("일정추가", self)
         self.content=QLineEdit(self)
         vbox.addWidget(self.cal)
@@ -275,15 +274,6 @@ class schedule_add(QWidget):
     def closeEvent(self, QCloseEvent):
         reset()
 
-class MyCheckBox(QCheckBox):
-    def __init__(self):
-        super().__init__(self)
-
-        self.custom_param = {
-            "border: none"
-            "color: white"
-        }
-
 class schedule_del(QWidget):
     def __init__(self):
         super().__init__()
@@ -295,19 +285,24 @@ class schedule_del(QWidget):
         global schh
         self.setWindowTitle('delete_schedule')
         self.setGeometry(800, 200, 300, 300)
-        self.checkbox = []
         vbox=QVBoxLayout()
+        debox=QHBoxLayout()
         for i in range(0, len(day)):
-            self.checkbox.append(MyCheckBox(str(day[i]) + "-" + schh[i], self))
-            self.checkbox.setStyleSheet('color: white')
-            self.checkbox[i].resize(150, 30)
-            vbox.addWidget(self.checkbox[i])
+            self.de_sc=QCheckBox(str(day[i]) + "-" + schh[i])
+            self.de_sc.setStyleSheet("color: white")
+            self.de_sc.resize(150, 30)
+            vbox.addWidget(self.de_sc)
 
-        self.dele = QPushButton('선택된 항목 삭제', self)
-        self.dele.resize(self.dele.sizeHint())
+        self.dele = QPushButton('')
+        self.dele.resize(231, 70)
+        self.dele.setIcon(QIcon("del.png"))
+        self.dele.setIconSize(QSize(210, 52))
         self.dele.clicked.connect(self.checkdelete)
         vbox.addWidget(self.dele)
-        self.setLayout(vbox)
+        debox.addSpacing(20)
+        debox.addLayout(vbox)
+        debox.addSpacing(20)
+        self.setLayout(debox)
         self.show()
 
     def checkdelete(self):
@@ -348,9 +343,9 @@ class schedule_check(QWidget):
                 self.scbox.addSpacing(30)
         self.scbox.addSpacing(15)
         self.totbox=QHBoxLayout(self)
-        self.totbox.addSpacing(15)
+        self.totbox.addSpacing(40)
         self.totbox.addLayout(self.scbox)
-        self.totbox.addSpacing(15)
+        self.totbox.addSpacing(40)
         # self.setLayout(self.scbox)
         self.show()
 
