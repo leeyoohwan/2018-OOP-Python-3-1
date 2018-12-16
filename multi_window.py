@@ -25,31 +25,32 @@ class MainWindow(QWidget):
         self.setWindowTitle("Dalbits")  # 창 제목 설정
 
         self.btn1=QPushButton('', self) #첫 매개변수는 버튼에 들어갈 문구, 두 번째 매개변수는 나 자신에게 버튼 추가한다.
-        self.btn1.resize(210, 70) #resize는 버튼 사이즈 조절함수 sizeHint는 버튼 문구에 적당한 크기 반환해주는 함수
-        self.btn1.setIcon(QIcon("bt1.png"))
-        self.btn1.setIconSize(QSize(210, 70))
-        self.btn1.move(550, 100) #버튼 왼쪽에서 20, 위쪽에서 30 이동
+        self.btn1.resize(231, 70) #resize는 버튼 사이즈 조절함수 sizeHint는 버튼 문구에 적당한 크기 반환해주는 함수
+        self.btn1.setIcon(QIcon("check.png"))
+        self.btn1.setIconSize(QSize(231, 70))
+        self.btn1.move(550, 100) #버튼 1왼쪽에서 20, 위쪽에서 30 이동
         self.btn1.clicked.connect(v.ex2_showed)
 
         self.btn2=QPushButton('', self)
-        self.btn2.setIcon(QIcon("bt2.png"))
-        self.btn2.setIconSize(QSize(210, 70))
-        self.btn2.resize(210, 70)
-        self.btn2.move(550, 250)
+        self.btn2.setIcon(QIcon("sc.png"))
+        self.btn2.setIconSize(QSize(228, 70))
+        self.btn2.resize(228, 70)
+        self.btn2.move(550, 265)
         self.btn2.clicked.connect(g.show)
 
         self.btn3 = QPushButton('', self)
-        self.btn3.setIcon(QIcon("bt2.png"))
-        self.btn3.setIconSize(QSize(210, 70))
-        self.btn3.resize(210, 70)
+        self.btn3.setIcon(QIcon("menu.png"))
+        self.btn3.setIconSize(QSize(223, 70))
+        self.btn3.resize(223, 70)
         self.btn3.move(550, 430)
         self.btn3.clicked.connect(m.menu_showed)
 
-class Exam2(QWidget):
+class Check_announcement(QWidget):
     def __init__(self):
         super().__init__() #부모 클래스의 init 함수 실행
     def ex2_showed(self):
         super().__init__()  # 부모 클래스의 init 함수 실행
+        self.setStyleSheet("background-color:black;")
         self.setWindowTitle("check_an") #창 제목 설정하는 함수
         show_list = check_an.gosasapar(z.user_id, z.user_pw)
 
@@ -60,9 +61,12 @@ class Exam2(QWidget):
 
         else:
             self.hbox = QVBoxLayout(self)
+            self.hbox.addSpacing(15)
             for i in range(0, len(show_list)):
                 lb = QLabel(show_list[i], self)
+                lb.setStyleSheet('color: white')
                 self.hbox.addWidget(lb)
+                self.hbox.addSpacing(15)
             self.setLayout(self.hbox)
             self.show()
 
@@ -123,6 +127,9 @@ class menu_window(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('check_menu')
+        self.setStyleSheet("background-color:black;")
+        # self.setGeometry(600, 600, 600, 500)
+        # self.setFixedSize(550, )
     def menu_showed(self):
         br_menu, lu_menu, di_menu = menu.check_menu(z.user_id, z.user_pw)
         print(br_menu)
@@ -130,33 +137,59 @@ class menu_window(QWidget):
         print(di_menu)
         brbox = QVBoxLayout()
         lb = QLabel('아침')
+        lb.setAlignment(Qt.AlignCenter)
+        lb.setStyleSheet('color: white')
+        brbox.addSpacing(15)
         brbox.addWidget(lb)
+        brbox.addSpacing(20)
 
         lubox = QVBoxLayout()
         lb = QLabel('점심')
+        lb.setAlignment(Qt.AlignCenter)
+        lb.setStyleSheet('color: white')
+        lubox.addSpacing(15)
         lubox.addWidget(lb)
+        lubox.addSpacing(20)
 
         dibox = QVBoxLayout()
         lb = QLabel('저녁')
+        lb.setAlignment(Qt.AlignCenter)
+        lb.setStyleSheet('color: white')
+        dibox.addSpacing(15)
         dibox.addWidget(lb)
+        dibox.addSpacing(20)
 
         for i in range(0, len(br_menu)):
             lb = QLabel(br_menu[i])
+            lb.setAlignment(Qt.AlignCenter)
+            lb.setStyleSheet('color: white')
             brbox.addWidget(lb)
-        # print("크앙!")
+            brbox.addSpacing(15)
         for i in range(0, len(lu_menu)):
             lb = QLabel(lu_menu[i])
+            lb.setAlignment(Qt.AlignCenter)
+            lb.setStyleSheet('color: white')
             lubox.addWidget(lb)
-        # print("크앙!")
+            lubox.addSpacing(15)
         for i in range(0, len(di_menu)):
             lb = QLabel(di_menu[i])
+            lb.setAlignment(Qt.AlignCenter)
+            lb.setStyleSheet('color: white')
             dibox.addWidget(lb)
+            dibox.addSpacing(15)
+
+        brbox.addStretch(1)
+        lubox.addStretch(1)
+        dibox.addStretch(1)
 
         self.hbox = QHBoxLayout(self)
-        print("크앙!")
+        self.hbox.addSpacing(50)
         self.hbox.addLayout(brbox)
+        self.hbox.addSpacing(50)
         self.hbox.addLayout(lubox)
+        self.hbox.addSpacing(50)
         self.hbox.addLayout(dibox)
+        self.hbox.addSpacing(50)
 
         self.setLayout(self.hbox)
         self.show()
@@ -191,19 +224,19 @@ class schedule_window(QWidget):
         sc_bt1.resize(210, 70)
         sc_bt1.setIcon(QIcon("ck.png"))
         sc_bt1.setIconSize(QSize(210, 70))
-        sc_bt1.move(70, 30)
+        sc_bt1.move(70, 40)
         sc_bt1.clicked.connect(f.show_sc)
         sc_bt2=QPushButton('', self)
         sc_bt2.resize(210, 70)
         sc_bt2.setIcon(QIcon("ad.png"))
         sc_bt2.setIconSize(QSize(210, 70))
-        sc_bt2.move(70, 150)
+        sc_bt2.move(70, 160)
         sc_bt2.clicked.connect(a.show)
         sc_bt3=QPushButton('', self)
         sc_bt3.resize(210, 70)
         sc_bt3.setIcon(QIcon("de.png"))
         sc_bt3.setIconSize(QSize(210, 70))
-        sc_bt3.move(70, 270)
+        sc_bt3.move(70, 280)
         sc_bt3.clicked.connect(b.initUI)
 
 class schedule_add(QWidget):
@@ -342,7 +375,7 @@ def reset(): # 파일을 리셋합니다. 프로그램을 종료할 때 시행�
 
 
 app = QApplication(sys.argv) #필수적으로 쓰는 부분 그런가보다 하고 넘어가면 될 듯?
-v = Exam2() #객체 생성
+v = Check_announcement() #객체 생성
 a = schedule_add()
 f = schedule_check()
 b = schedule_del()
