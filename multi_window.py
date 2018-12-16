@@ -247,6 +247,7 @@ class schedule_add(QWidget):
         self.cal = QCalendarWidget(self)
         self.cal.setFixedSize(self.cal.sizeHint())
         self.cal.selectionChanged.connect(self.dayset)
+        self.cal.setStyleSheet("background-color:blue;")
         self.content_send=QPushButton("일정추가", self)
         self.content=QLineEdit(self)
         vbox.addWidget(self.cal)
@@ -264,14 +265,24 @@ class schedule_add(QWidget):
         global day
         global schh
         sch_day=int(self.set_day[0]+self.set_day[1]+self.set_day[2])
-        print(sch_day)
-        print(day)
+        # print(sch_day)
+        # print(day)
         day.append(sch_day)
         schh.append(str(self.content.text()))
         sorter()
+        self.content.clear()
 
     def closeEvent(self, QCloseEvent):
         reset()
+
+class MyCheckBox(QCheckBox):
+    def __init__(self):
+        super().__init__(self)
+
+        self.custom_param = {
+            "border: none"
+            "color: white"
+        }
 
 class schedule_del(QWidget):
     def __init__(self):
@@ -279,6 +290,7 @@ class schedule_del(QWidget):
 
     def initUI(self):
         super().__init__()
+        self.setStyleSheet("background-color:black;")
         global day
         global schh
         self.setWindowTitle('delete_schedule')
@@ -286,7 +298,8 @@ class schedule_del(QWidget):
         self.checkbox = []
         vbox=QVBoxLayout()
         for i in range(0, len(day)):
-            self.checkbox.append(QCheckBox(str(day[i]) + "-" + schh[i], self))
+            self.checkbox.append(MyCheckBox(str(day[i]) + "-" + schh[i], self))
+            self.checkbox.setStyleSheet('color: white')
             self.checkbox[i].resize(150, 30)
             vbox.addWidget(self.checkbox[i])
 
@@ -319,13 +332,26 @@ class schedule_check(QWidget):
 
     def show_sc(self):
         super().__init__()
+        self.setStyleSheet("background-color:black;")
         self.setWindowTitle('check_schedule')
-        self.setFixedSize(300, 400)
+        self.scbox=QVBoxLayout()
+        self.scbox.addSpacing(15)
+        # self.setFixedSize(300, 400)
         for i in range(0, len(day)):
             daylabel=QLabel(str(day[i]), self)
+            daylabel.setStyleSheet('color: white')
             schhlabel=QLabel(schh[i], self)
-            daylabel.move(10, i*40)
-            schhlabel.move(10, i*40+15)
+            schhlabel.setStyleSheet('color: white')
+            self.scbox.addWidget(daylabel)
+            self.scbox.addWidget(schhlabel)
+            if i!=len(day)-1:
+                self.scbox.addSpacing(30)
+        self.scbox.addSpacing(15)
+        self.totbox=QHBoxLayout(self)
+        self.totbox.addSpacing(15)
+        self.totbox.addLayout(self.scbox)
+        self.totbox.addSpacing(15)
+        # self.setLayout(self.scbox)
         self.show()
 
 def fileopen():  # 파일 오픈하여 캘린더에 담기. 처음 한번만 시행.
